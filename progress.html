@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Progress</title>
+  <link rel="stylesheet" href="nav.css">
+  <link rel="stylesheet" href="progress.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+</head>
+
+<body>
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">Fitness Warriors</a>
+      <ul id="nav-mobile" class="right">
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="progress.html">Progress</a></li>
+        <li><a href="workouts.html">Workouts</a></li>
+        <li><a href="stats.html">Stats</a></li>
+        <li><a href="Profile.html"><i class="material-icons">account_circle</i></a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="dropdown">
+    <label for="stats">Select Progress Type</label>
+    <select id="stats">
+      <option value="duration">Duration</option>
+      <option value="benchPress">Bench Press</option>
+      <option value="deadlift">Deadlift</option>
+      <option value="cardio">Cardio</option>
+      <option value="sitUps">Sit Ups</option>
+      <!-- Add more as needed -->
+    </select>
+  </div>
+
+  <div class="chart-wrapper">
+    <canvas id="myChart" style="width:100%; max-width:600px;"></canvas>
+  </div>
+
+  <script>
+    fetch('progress.json')
+      .then(response => response.json())
+      .then(json => {
+        const workouts = json.progress.recent_workouts;
+        const labels = workouts.map(w => w.date);
+
+        // Metric extractors
+        const metrics = {
+          duration: {
+            label: 'Workout Duration (min)',
+            values: workouts.map(w => w.duration),
+            color: '#ad0303'
+          },
+          benchPress: {
+            label: 'Bench Press (lbs)',
+            values: workouts
+              .map(w => w.exercises.find(e => e.name === "Bench Press"))
+              .filter(e => e)
+              .map(e => e.weight[e.weight.length - 1]),
+            color: '#036aad'
+          },
+          deadlift: {
+            label: 'Deadlift (lbs)',
+            values: workouts
+              .map(w => w.exercises.find(e => e.name === "Deadlift"))
+              .filter(e => e)
+              .map(e => e.weight[e.weight.length - 1]),
+            color: '#795548'
+          },
+          cardio: {
+            label: 'Cardio (min)',
+            values: workouts.map(w => w.cardio || 0),
+            color: '#009688'
+          },
+          sitUps: {
+            label: 'Sit Ups (reps)',
+            values: workouts
+              .map(w => w.exercises.find(e => e.name === "Sit Ups"))
+              .filter(e => e)
+              .map(e => e.reps || 0),
+            color: '#607d8b'
+          }
+        };
+
+        const ctx = document.getElementById("myChart").getContext("2d");
+        let chart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [{
+              label: metrics.duration.label,
+              data: metrics.duration.values,
+              borderColor: metrics.duration.color,
+              backgroundColor: "transparent",
+              pointRadius: 4,
+              pointBackgroundColor: metrics.duration.color
+            }]
+          },
+          options: {
+            responsive: true,
+            animation: {
+              duration: 1500,
+              easing: 'easeOutQuart'
+            },
+            scales: {
+              yAxes: [{
+                ticks: { beginAtZero: true }
+              }]
+            }
+          }
+        });
+
+        document.getElementById("stats").addEventListener("change", event => {
+          const selected = event.target.value;
+          const metric = metrics[selected];
+
+          chart.data.datasets[0].label = metric.label;
+          chart.data.datasets[0].data = metric.values;
+          chart.data.datasets[0].borderColor = metric.color;
+          chart.data.datasets[0].pointBackgroundColor = metric.color;
+          chart.update();
+        });
+      });
+  </script>
+</body>
+</html>

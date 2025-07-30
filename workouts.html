@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workouts</title>
+  <link rel="stylesheet" href="nav.css">
+  <link rel="stylesheet" href="workouts.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@material/web/button/outlined-button.js"></script>
+  
+
+
+
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Fitness Warriors</a>
+            <ul id="nav-mobile" class="right">
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="progress.html">Progress</a></li>
+                <li><a href="workouts.html">Workouts</a></li>
+                <li><a href="stats.html">Stats</a></li>
+                <li><a href="Profile.html"><i class="material-icons">account_circle</i></li></a>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="workoutPage">
+            <h1> Workout Log</h1>
+                <div class="dateExcercise">
+                    <h2 class="excerciseFor"> Excercise For:</h2>
+                        <div class="dateButton">
+                            <button>
+                                <i class="arrow left"></i>
+                            </button>
+                            <button>mm/dd/yyyy</button>
+                            <button>
+                                <i class="arrow right"></i>
+                            </button>
+                        </div>
+                </div>    
+
+        </div>
+        <hr>
+
+        <div class="Cardio">
+            <h2>
+                Cardio
+            </h2>
+            <div class="duration">
+                <h4 class="cardioMinutes">Minutes</h4>
+            </div>
+        </div>
+
+        <div class="cardioWorkouts">
+
+        </div>
+
+        <div class="cardioButtonSection">
+                <md-outlined-button class="cardioButton">Add</md-outlined-button>
+                <md-outlined-button class="cardioButton2">Remove</md-outlined-button>
+        </div>
+        <hr>
+
+        <div class="Strength">
+            <h2>
+                Strength
+            </h2>
+            <div class="duration1">
+                <h4 class="Sets">Sets</h4>
+                <h4 class="Reps">Reps</h4>
+                <h4 class="Weight">Weight</h4>
+            </div>
+        </div>
+
+        <div class="strengthWorkouts">
+
+        </div>
+
+        <div class="strengthButtonSection">
+                <md-outlined-button class="strengthButton">Add</md-outlined-button>
+                <md-outlined-button class="strengthButton2">Remove</md-outlined-button>
+        </div>
+        <hr>
+
+        <div>
+            <form class="exerciseNotes">
+                <label for="Notes" class="inputLabel">Excercise Notes</label>
+                <input type="text" class="inputField" value="">
+4            </form>
+        </div>
+
+        <md-outlined-button class="logWorkoutButton">Log Workout</md-outlined-button>
+    </div>    
+</body>
+</html>

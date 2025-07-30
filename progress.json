@@ -1,0 +1,44 @@
+{
+  "user_id": 1091,
+  "progress": {
+    "start_weight": 250.5,
+    "goal_weight": 200.0,
+    "current_weight": 235.2,
+    "workouts_completed": 42,
+    "milestones": ["Lost 10 lbs", "Hit 30 workout streak"],
+    "updated_at": "2025-07-15T02:30:00Z",
+    "recent_workouts": [
+      {
+        "date": "2025-07-25",
+        "type": "strength",
+        "duration": 45.0,
+        "exercises": [
+          {
+            "name": "Bench Press",
+            "sets": 3,
+            "reps": [10, 8, 6],
+            "weight": [135, 145, 155],
+            "duration": 7.5
+          },
+          {
+            "name": "Pull-Ups",
+            "sets": 4,
+            "reps": [8, 7, 6, 6],
+            "duration": 6.0
+          }
+        ]
+      },
+      {
+        "date": "2025-07-22",
+        "type": "cardio",
+        "duration": 30.0,
+        "exercises": [
+          {
+            "name": "Treadmill Run",
+            "duration": 30.0
+          }
+        ]
+      }
+    ]
+  }
+}

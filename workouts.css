@@ -1,0 +1,195 @@
+  .content{
+    width: 900px;
+    margin: auto;
+    padding: 10px;
+  }
+    
+  
+  .dateButton{
+    position: relative;
+    left: 40px; /*margin wont work*/
+}
+
+.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.dateButton .arrow.left{
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+.dateButton .arrow.right {  /* .right by itself messes with the nav bar*/
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+.dateExcercise{
+    display: flex;
+    gap: 4px;
+}
+.excerciseFor{
+    margin: 0px; /*keeps excercise for and dateExcercise level*/
+}
+.dateExcercise > div{
+    margin: 0px;
+    padding: 2px 4px;
+    
+}
+.Cardio{
+    display:flex;
+}
+.cardioMinutes{
+    width: 480px;
+    height: 35px;
+    background-color: #ad0303;
+    color: white;
+    padding: 2px;
+    margin-left: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cardioButton:hover,
+.cardioButton2:hover {
+    background-color: #ad0303;
+    color: #ffffff;
+}
+
+.cardioButton{
+    background-color: transparent;
+    color: #ad0303;
+    border: 2px solid #ad0303;
+    border-radius: 20px;
+    padding: 10px 16px;
+    border-style: solid;
+    transition: background-color 0.2s, color 0.2s;
+    width: 50px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-left: 0px;
+}
+.cardioButton2{
+    background-color: transparent;
+    color: #ad0303;
+    border: 2px solid #ad0303;
+    border-radius: 20px;
+    padding: 10px 16px;
+    border-style: solid;
+    transition: background-color 0.2s, color 0.2s;
+    width: 50px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-left: 10px;
+}
+.cardioButtonSection{
+    display: flex;
+}
+.Strength{
+    display:flex;
+}
+.strengthButton{
+    background-color: transparent;
+    color: #ad0303;
+    border: 2px solid #ad0303;
+    border-radius: 20px;
+    padding: 10px 16px;
+    border-style: solid;
+    transition: background-color 0.2s, color 0.2s;
+    width: 50px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-left: 0px;
+}
+
+.strengthButton2{
+    background-color: transparent;
+    color: #ad0303;
+    border: 2px solid #ad0303;
+    border-radius: 20px;
+    padding: 10px 16px;
+    border-style: solid;
+    transition: background-color 0.2s, color 0.2s;
+    width: 50px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-left: 10px;
+}
+.strengthButtonSection{
+    display: flex;
+}
+.strengthButton:hover,
+.strengthButton2:hover {
+    background-color: #ad0303;
+    color: #ffffff;
+}
+
+
+
+.duration1{
+    margin-left: 330px;
+    display: flex;
+    gap: 16px;
+}
+
+
+.Sets, /* "," = key to making the class for the centered text*/
+.Reps,
+.Weight{
+    width: 150px;
+    height: 35px;
+    background-color:#ad0303;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+.exerciseNotes{
+    margin-top: 20px;
+
+}
+.inputLabel{
+    display:block;
+    margin-bottom: 20px;
+    color:#ad0303;
+}
+.inputField{
+    height: 50px;
+    width:  900px;
+    top: 460px;
+    padding: 0.4px;
+    padding-bottom:190px;
+    padding-top: 0px;
+    border-radius: 20px;
+    border: 2px solid #ad0303;
+}
+.exerciseNotes{
+    margin-top: 20px;
+    
+}
+.logWorkoutButton{
+    background-color: #ad0303;
+    color: #ffffff;
+    border: 2px solid #ad0303;
+    border-radius: 20px;
+    padding: 10px 16px;
+    border-style: solid;
+    transition: background-color 0.2s, color 0.2s;
+    width: 90px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 20px;
+}
+hr{
+    width: auto;
+}
+.logWorkoutButton:hover {
+    background-color: #ffffff;
+    color: #ad0303;
+}
