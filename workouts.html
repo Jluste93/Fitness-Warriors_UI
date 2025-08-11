@@ -12,7 +12,6 @@
   
 
 
-
 </head>
 
 <body>
@@ -48,23 +47,27 @@
         </div>
         <hr>
 
-        <div class="Cardio">
-            <h2>
-                Cardio
-            </h2>
-            <div class="duration">
-                <h4 class="cardioMinutes">Minutes</h4>
+      
+        
+        <section class="input-section-cardio">
+
+            <div class="Cardio">
+                <h2>Cardio</h2>
+                <div class="duration">
+                    <h4 class="cardioMinutes">Minutes</h4>
+                </div>
             </div>
-        </div>
 
-        <div class="cardioWorkouts">
+            <div class="cardioWorkouts">
 
-        </div>
+            </div>
 
-        <div class="cardioButtonSection">
-                <md-outlined-button class="cardioButton">Add</md-outlined-button>
-                <md-outlined-button class="cardioButton2">Remove</md-outlined-button>
-        </div>
+            <div class="cardioButtonSection">
+                <md-outlined-button class="cardioButton" onclick="window.location.href='workout_data.html'">Add</md-outlined-button>
+                <md-outlined-button class="cardioButton2" onclick="window.location.href='#'">Remove</md-outlined-button>
+            </div>
+
+        </section>
         <hr>
 
         <div class="Strength">
@@ -83,8 +86,8 @@
         </div>
 
         <div class="strengthButtonSection">
-                <md-outlined-button class="strengthButton">Add</md-outlined-button>
-                <md-outlined-button class="strengthButton2">Remove</md-outlined-button>
+            <md-outlined-button class="strengthButton box" onclick="window.location.href='workout_data.html'">Add</md-outlined-button>
+            <md-outlined-button class="strengthButton2 box" onclick="window.location.href='#'">Remove</md-outlined-button>
         </div>
         <hr>
 
@@ -92,10 +95,31 @@
             <form class="exerciseNotes">
                 <label for="Notes" class="inputLabel">Excercise Notes</label>
                 <input type="text" class="inputField" value="">
-4            </form>
+            </form>
         </div>
 
-        <md-outlined-button class="logWorkoutButton">Log Workout</md-outlined-button>
-    </div>    
+        <md-outlined-button class="logWorkoutButton" onclick="window.location.href='#'">Log Workout</md-outlined-button>
+    </div>
+    
+    <script>
+        function sendData(workout_name, sets, reps, weight) {
+            fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    workout_name,
+                    sets,
+                    reps,
+                    weight
+                })
+            })
+            .then(res => res.text())
+            .then(data => console.log(data))
+            .catch(err => console.error('Error', err));
+        }
+    </script>
 </body>
+
 </html>
