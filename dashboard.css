@@ -46,17 +46,25 @@
     }
     .boxLayout{
        display: grid;
-       grid-template-columns: 100px 50px;
+       grid-template-columns: 1fr 1fr;
        grid-template-rows: 300px auto 100px;
-       column-gap: 350px;
+       column-gap: 50px;
        row-gap: 30px;
-       position: relative;
-       left: 20%;
-       right: 40%;
-       top: 40%;
-       transform: translate(-50,-50);
-       z-index:1;
     }
+
+    .centerWrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+         height: 100vh;
+         padding-top: 50px;
+    }
+    .motivational{
+        font-family: "Roboto", sans-serif;
+    }
+
+
 
     @media (max-width: 600px){
         .boxLayout{
