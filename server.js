@@ -24,6 +24,9 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname))); // For CSS, JS, images
 
 // Routes
+app.get('/', (req, res) => {
+  res.send('Server is alive!');
+});
 
 //app.post('/users', (req, res) => {
 //    res.send('Stats added successfully!. Account created successfully.');
