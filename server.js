@@ -197,6 +197,9 @@ if (!schedule_date) {
 });
     
 // Start server
-app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+//app.listen(PORT, () => {
+//    console.log(`Server is listening on port ${PORT}`);
+//});
+app.listen(3000, '0.0.0.0', () => {
+    console.log('Server running on port 3000');
 });
