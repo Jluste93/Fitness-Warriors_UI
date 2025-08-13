@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script type="module" src="https://cdn.jsdelivr.net/npm/@material/web/button/outlined-button.js"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  --> 
   
 
 
@@ -28,9 +29,14 @@
         </div>
     </nav>
 
-    <div class="content">
+    <div class="content"> 
         <div class="workoutPage">
-            <h1> Workout Log</h1>
+            <header>
+                <h1> Workout Log</h1>
+                <!-- <p>Track your workouts and calories burned</p>-->
+            </header>
+
+            <!--date setion-->
                 <div class="dateExcercise">
                     <h2 class="excerciseFor"> Excercise For:</h2>
                         <div class="dateButton">
@@ -43,54 +49,43 @@
                             </button>
                         </div>
                 </div>    
-
         </div>
+
+
         <hr>
 
-      
-        
-        <section class="input-section-cardio">
+        <section class="input-section">
+            <h2>Add workout</h2>
+            <form id="Enter-excercise">
+                <input type="text" id="excercise-name" placeholder="Excercise / Workout Name" required>
+                <input type="text" id="reps" placeholder="Reps">
+                <input type="text" id="set" placeholder="Sets">
+                <input type="number" id="duration" placeholder="Duration" required min="1">
+                <input type="number" id="calories" placeholder="Calories" required min="1">
+                <button type="submit"> Add Workout</button>
+            </form>
 
-            <div class="Cardio">
-                <h2>Cardio</h2>
-                <div class="duration">
-                    <h4 class="cardioMinutes">Minutes</h4>
-                </div>
+
+            <!--displayed calories-->
+            <div class="total-calories">
+                <h3>Total Calories Burned: <span id="total-calories"> 0</span></h3>
             </div>
 
-            <div class="cardioWorkouts">
 
+             <!--duration workouts-->
+            <div class="workout-duration">
+                <h3>Duration <span id="workout-duration"> 0 min</span></h3>
             </div>
+            <!--workout list-->
+            <section class="workout-list">
+                <h2>Workouts Logged</h2>
+                <ul id="workouts"></ul>
+            </section>
 
-            <div class="cardioButtonSection">
-                <md-outlined-button class="cardioButton" onclick="window.location.href='workout_data.html'">Add</md-outlined-button>
-                <md-outlined-button class="cardioButton2" onclick="window.location.href='#'">Remove</md-outlined-button>
-            </div>
 
         </section>
-        <hr>
 
-        <div class="Strength">
-            <h2>
-                Strength
-            </h2>
-            <div class="duration1">
-                <h4 class="Sets">Sets</h4>
-                <h4 class="Reps">Reps</h4>
-                <h4 class="Weight">Weight</h4>
-            </div>
-        </div>
-
-        <div class="strengthWorkouts">
-
-        </div>
-
-        <div class="strengthButtonSection">
-            <md-outlined-button class="strengthButton box" onclick="window.location.href='workout_data.html'">Add</md-outlined-button>
-            <md-outlined-button class="strengthButton2 box" onclick="window.location.href='#'">Remove</md-outlined-button>
-        </div>
-        <hr>
-
+<hr>
         <div>
             <form class="exerciseNotes">
                 <label for="Notes" class="inputLabel">Excercise Notes</label>

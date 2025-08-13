@@ -8,7 +8,7 @@ const { Pool } = require('pg');
 
 const pool = new Pool ({
     user: 'postgres',
-    host: '99.27.228.194', //changed from localhost and rds-ca-rsa2048-g1
+    host: 'localhost', //changed from localhost and rds-ca-rsa2048-g1 .....database-1.c322e60egpt1.us-east-2.rds.amazonaws.com
     database: 'postgres',
     password: 'nordaj93',
     port: 5432,
