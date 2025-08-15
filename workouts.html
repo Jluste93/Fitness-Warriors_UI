@@ -63,15 +63,21 @@
                 <input type="number" id="Reps" placeholder="Reps">
                 <input type="number" id="Sets" placeholder="Sets">
                 <input type="number" id="duration" placeholder="Duration" required min="1">
-                <input type="number" id="calories" placeholder="Calories" required min="1">
+                <!--<input type="number" id="calories" placeholder="Calories" required min="1">-->
+                <select name="Type" id="workoutType">
+                        <option value="Cardio">Cardio</option>
+                        <option value="Weight Lifting">Weight Lifting</option>
+                        <option value="HIIT">HIIT</option>
+                        <option value="Yoga">Yoga</option>
+                </select>
                 <button type="submit"> Add Workout</button>
             </form>
             
 
-            <!--displayed calories-->
+            <!--displayed calories
             <div class="total-calories">
                 <h3>Total Calories Burned: <span id="total-calories"> 0</span></h3>
-            </div>
+            </div>-->
 
 
              <!--duration workouts-->

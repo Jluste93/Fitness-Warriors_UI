@@ -90,16 +90,21 @@ app.get('/stats', (req, res) => {
 });
 
 //log workouts
-app.post('/workouts', (req, res) => {
+app.post('/workouts', async (req, res) => {
     const {workouts_id, exercisename, w_type} = req.body;
 
-    if 
-        (workouts_id && exercisename && w_type) {
-        console.log('Workout logged successfully');
-        res.send('Workout logged successfully');
-
-        } else{
-            res.status(400).send('Enter required information');
+    if (!workouts_id || !exercisename || !w_type) {
+        return res.status(400).send('Enter required information');
+        }
+        try {
+            await pool.query(
+                'INSERT INTO workouts (workouts_id, exercisename, w_type) VALUES ($1, $2, $3)',
+                [workouts_id, ExcerciseNameInput, w_type]
+            );
+            res.status(201).send('Workout logged successfully');
+        } catch (err) {
+            console.error('Error logging workout:', err);
+            res.status(500).send('Failed to log workout');
         }
 });
 
