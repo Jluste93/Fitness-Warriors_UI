@@ -1,0 +1,9 @@
+.update {
+    padding: 10 px 20px;
+    background-color: aqua;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: crosshair;
+
+}

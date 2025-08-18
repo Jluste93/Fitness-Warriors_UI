@@ -29,17 +29,18 @@
     <label for="stats">Select Progress Type</label>
     <select id="stats">
       <option value="duration">Duration</option>
-      <option value="benchPress">Bench Press</option>
-      <option value="deadlift">Deadlift</option>
-      <option value="cardio">Cardio</option>
-      <option value="sitUps">Sit Ups</option>
+      <option value="calories">Calories Burned</option>
+      <option value="reps">Reps</option>
+      <option value="sets">Sets</option>
+      <option value="streaks">Streaks</option>
       <!-- Add more as needed -->
     </select>
   </div>
 
   <div class="chart-wrapper">
-    <canvas id="myChart" style="width:100%; max-width:600px;"></canvas>1
+    <canvas id="myChart" style="width:100%; max-width:600px;"></canvas>
   </div>
+  <button class="Update">Click  </button>
 
   <script>
     fetch('progress.json')
@@ -55,33 +56,24 @@
             values: workouts.map(w => w.duration),
             color: '#ad0303'
           },
-          benchPress: {
-            label: 'Bench Press (lbs)',
-            values: workouts
-              .map(w => w.exercises.find(e => e.name === "Bench Press"))
-              .filter(e => e)
-              .map(e => e.weight[e.weight.length - 1]),
+          calories: {
+            label: 'Calories Burned',
+            values: workouts.map(w => w.calories || 0),
             color: '#036aad'
           },
-          deadlift: {
-            label: 'Deadlift (lbs)',
-            values: workouts
-              .map(w => w.exercises.find(e => e.name === "Deadlift"))
-              .filter(e => e)
-              .map(e => e.weight[e.weight.length - 1]),
+          reps: {
+            label: 'Reps',
+            values: workouts.map(w => w.reps || 0),
             color: '#795548'
           },
-          cardio: {
-            label: 'Cardio (min)',
-            values: workouts.map(w => w.cardio || 0),
+          sets: {
+            label: 'Sets',
+            values: workouts.map(w => w.sets || 0),
             color: '#009688'
           },
-          sitUps: {
-            label: 'Sit Ups (reps)',
-            values: workouts
-              .map(w => w.exercises.find(e => e.name === "Sit Ups"))
-              .filter(e => e)
-              .map(e => e.reps || 0),
+          streaks: {
+            label: 'Streaks',
+            values: workouts.map(w => w.streaks || 0),
             color: '#607d8b'
           }
         };
