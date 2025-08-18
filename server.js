@@ -91,16 +91,32 @@ app.get('/stats', (req, res) => {
 
 //log workouts
 app.post('/workouts', async (req, res) => {
-    const {workouts_id, exercisename, w_type} = req.body;
+    const workoutsToLog = req.body;
 
-    if (!workouts_id || !exercisename || !w_type) {
-        return res.status(400).send('Enter required information');
+    if (!Array.isArray(workoutsToLog) || workoutsToLog.length === 0) {
+        return res.status(400).send('Invalid Request');
         }
+
         try {
-            await pool.query(
-                'INSERT INTO workouts (workouts_id, exercisename, w_type) VALUES ($1, $2, $3)',
-                [workouts_id, ExcerciseNameInput, w_type]
-            );
+            for(const workout of workoutsToLog) {
+                const { exercisename, w_type, Reps, Sets, duration, calories} = workout; // removed users_id temp
+                if ( exercisename == null ||
+                    w_type == null ||
+                    Reps == null ||
+                    Sets == null ||
+                    duration == null || 
+                    calories == null
+                )
+                {
+                    return res.status(400).send('One or more workout entries are missing required information.');
+                }
+
+                await pool.query(
+                    'INSERT INTO workouts (exercisename, w_type, Reps, Sets, duration, calories) VALUES ($1, $2, $3, $4, $5, $6)',
+                    [exercisename, w_type, Reps, Sets, duration, calories]  //add users_id
+                );
+            }
+            
             res.status(201).send('Workout logged successfully');
         } catch (err) {
             console.error('Error logging workout:', err);
@@ -108,7 +124,7 @@ app.post('/workouts', async (req, res) => {
         }
 });
 
-//updating stats or creating stats
+//updating stats or creating stats. *
 
 app.post('/submit', async (req, res) => {
     const { goals, schedule, activity_level, height, weight, gender,dob } = req.body;

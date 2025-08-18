@@ -74,7 +74,7 @@
   animation: fadeIn 0.5s;
 }
 
-#Enter-excercise input {
+#Enter-exercise input {
     width: calc(50% - 10px); /*split*/
     padding: 10px;
     margin: 5px;
@@ -83,11 +83,11 @@
     cursor: pointer;
     transition: background-color 0.3s;
 }
-#Enter-excercise input:invalid {
+#Enter-exercise input:invalid {
     border-color:#ad0303;
 }
 
-#Enter-excercise button {
+#Enter-exercise button {
     padding: 10px 20px;
     background-color: #ad0303;
     color:#ffffff;
@@ -96,7 +96,7 @@
     transition: background-color 0.3s;;
 }
 
-#Enter-excercise button:hover {
+#Enter-exercise button:hover {
     background-color: #ffffff;
     color:#ad0303;
 }
@@ -156,8 +156,13 @@
 #workouts li .delete-btn:hover {
     color: #ad0303; /* Darker red on hover */
 }
-
-
+.unsaved {
+  opacity: 0.6;
+  font-style: italic;
+}
+.logged {
+  font-weight: bold;
+}
 
 
 hr{
@@ -192,13 +197,19 @@ hr{
     border: 2px solid #ad0303;
     border-radius: 20px;
     padding: 10px 16px;
-    border-style: solid;
+    border-radius: 8px;
     transition: background-color 0.2s, color 0.2s;
     width: 90px;
     display: flex;
     gap: 16px;
     justify-content: center;
     margin-top: 20px;
+    transition: background-color 0.3s;;
+}
+
+.logWorkoutButton:hover {
+    background-color: #ffffff;
+    color:#ad0303;
 }
 
 

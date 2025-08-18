@@ -58,26 +58,27 @@
 
         <section class="input-section">
             <h2>Add workout</h2>
-            <form id="Enter-excercise">
-                <input type="text" id="excercise-name" placeholder="Excercise / Workout Name" required>
+            <form id="Enter-exercise">
+                <input type="text" id="exercise-name" placeholder="Exercise / Workout Name" required>
                 <input type="number" id="Reps" placeholder="Reps">
                 <input type="number" id="Sets" placeholder="Sets">
                 <input type="number" id="duration" placeholder="Duration" required min="1">
-                <!--<input type="number" id="calories" placeholder="Calories" required min="1">-->
-                <select name="Type" id="workoutType">
+                <input type="number" id="calories" placeholder="Calories" required min="1">
+                <select name="Type" id="w_type">
                         <option value="Cardio">Cardio</option>
                         <option value="Weight Lifting">Weight Lifting</option>
                         <option value="HIIT">HIIT</option>
                         <option value="Yoga">Yoga</option>
+                        <option value="Something Else">Something Else</option>
                 </select>
                 <button type="submit"> Add Workout</button>
             </form>
             
 
-            <!--displayed calories
+            <!--displayed calories-->
             <div class="total-calories">
                 <h3>Total Calories Burned: <span id="total-calories"> 0</span></h3>
-            </div>-->
+            </div>
 
 
              <!--duration workouts-->
@@ -96,7 +97,7 @@
 
         <div>
             <form class="exerciseNotes">
-                <label for="Notes" class="inputLabel">Excercise Notes</label>
+                <label for="Notes" class="inputLabel">Exercise Notes</label>
                 <input type="text" class="inputField" value="">
             </form>
         </div>
