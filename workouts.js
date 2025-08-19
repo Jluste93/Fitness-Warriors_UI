@@ -24,7 +24,7 @@ function getWorkoutInput() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  //loadWorkouts();
+  loadWorkouts();
   updateTotalCalories();
   updateWorkoutDuration();
 

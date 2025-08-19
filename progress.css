@@ -7,3 +7,10 @@
     cursor: crosshair;
 
 }
+
+#myChart {
+  width: 100%;
+  max-width: 600px;
+  height: 400px;
+  display: block;
+}

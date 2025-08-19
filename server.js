@@ -157,9 +157,16 @@ app.post('/submit', async (req, res) => {
 
 
 //create a workout
-//app.get('/progress', (req, res) => {
 
-//}
+// get progress from workout page
+app.get('/progress', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM workouts');
+        res.json(result.rows)
+    } catch (err){
+        res.status(500).json({error: 'Something went wrong'})
+    }
+});
 
 //delete
 app.delete('/workouts/:id', async (req, res) => {

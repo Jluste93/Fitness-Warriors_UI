@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="progress.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 </head>
 
 <body>
@@ -32,22 +32,25 @@
       <option value="calories">Calories Burned</option>
       <option value="reps">Reps</option>
       <option value="sets">Sets</option>
-      <option value="streaks">Streaks</option>
+      <!--<option value="streaks">Streaks</option>-->
       <!-- Add more as needed -->
     </select>
   </div>
 
   <div class="chart-wrapper">
-    <canvas id="myChart" style="width:100%; max-width:600px;"></canvas>
+    <canvas id="myChart" width="600" height="400"></canvas>
   </div>
   <button class="Update">Click  </button>
 
   <script>
-    fetch('progress.json')
-      .then(response => response.json())
-      .then(json => {
-        const workouts = json.progress.recent_workouts;
-        const labels = workouts.map(w => w.date);
+
+    window.addEventListener('DOMContentLoaded', () => {
+
+       fetch('/progress')
+        .then(response => response.json())
+        .then(json => {
+        const workouts = json;
+        const labels = workouts.map(w => w.exercisename);
 
         // Metric extractors
         const metrics = {
@@ -71,12 +74,11 @@
             values: workouts.map(w => w.sets || 0),
             color: '#009688'
           },
-          streaks: {
-            label: 'Streaks',
-            values: workouts.map(w => w.streaks || 0),
-            color: '#607d8b'
-          }
+         
         };
+
+        console.log("Labels:", labels);
+        console.log("Duration values:", metrics.duration.values);
 
         const ctx = document.getElementById("myChart").getContext("2d");
         let chart = new Chart(ctx, {
@@ -99,12 +101,13 @@
               easing: 'easeOutQuart'
             },
             scales: {
-              yAxes: [{
-                ticks: { beginAtZero: true }
-              }]
+              y: {
+                beginAtZero: true 
+              }
             }
           }
         });
+        
 
         document.getElementById("stats").addEventListener("change", event => {
           const selected = event.target.value;
@@ -116,7 +119,30 @@
           chart.data.datasets[0].pointBackgroundColor = metric.color;
           chart.update();
         });
+        console.log("Chart loaded");
+
+        const totalWorkouts = workouts.length;
+        const completedWorkouts = workouts.filter(w => w.duration > 0).length;
+
+        const progressPercent = totalWorkouts > 0
+        ? Math.round((completedWorkouts / totalWorkouts) * 100)
+        : 0;
+        updateProgress(progressPercent)
+
+        function updateProgress(percent) {
+          console.log(`Progress: ${percent}%`);
+            // Optionally update a DOM element here
+          }
+          console.log("Chart loaded");
+        })
+        .catch(err => {
+          console.error("Failed to fetch progress data:", err);
+
+        });
+
+
       });
+   
   </script>
 </body>
 </html>

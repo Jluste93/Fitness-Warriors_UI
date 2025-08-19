@@ -5,4 +5,4 @@ function updateProgress(value) {
 }
 
 // Example: simulate progress
-updateProgress(65); // Later this will come from backend data
+//updateProgress(65); // Later this will come from backend data
