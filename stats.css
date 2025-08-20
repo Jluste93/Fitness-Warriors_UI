@@ -47,3 +47,9 @@ input[type="text"] {
 .stats-box button:hover {
     background-color: #880202;
 }
+
+.height-cell {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
