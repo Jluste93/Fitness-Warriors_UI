@@ -3,8 +3,10 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const cors = require('cors'); // new3
 const PORT = process.env.PORT || 3000;
 const { Pool } = require('pg');
+
 
 const pool = new Pool ({
     user: 'postgres',
@@ -22,6 +24,7 @@ pool.connect()
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 app.use(express.static(path.join(__dirname))); // For CSS, JS, images
+app.use(cors()); // Allow cross-origin requests
 
 // Routes
 app.get('/', (req, res) => {
@@ -40,9 +43,7 @@ app.get('/', (req, res) => {
 //    res.send('workouts.html');  //log a workout and create a workout
 //});
 
-app.get('/progress', (req, res) => {
-    res.sendFile(path.join(__dirname, 'progress.html')); // check progress
-});
+
 
 app.delete('/workouts', (req, res) => {
     res.send('workout deleted');  //log a workout and create a workout

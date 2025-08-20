@@ -1,148 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Progress</title>
-  <link rel="stylesheet" href="nav.css">
-  <link rel="stylesheet" href="progress.css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Progress</title>
+    <link rel="stylesheet" href="nav.css">
+    <link rel="stylesheet" href="progress.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 </head>
 
 <body>
-  <nav>
-    <div class="nav-wrapper">
-      <a href="#" class="brand-logo">Fitness Warriors</a>
-      <ul id="nav-mobile" class="right">
-        <li><a href="index.html">Dashboard</a></li>
-        <li><a href="progress.html">Progress</a></li>
-        <li><a href="workouts.html">Workouts</a></li>
-        <li><a href="stats.html">Stats</a></li>
-        <li><a href="Profile.html"><i class="material-icons">account_circle</i></a></li>
-      </ul>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Fitness Warriors</a>
+            <ul id="nav-mobile" class="right">
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="progress.html">Progress</a></li>
+                <li><a href="workouts.html">Workouts</a></li>
+                <li><a href="stats.html">Stats</a></li>
+                <li><a href="Profile.html"><i class="material-icons">account_circle</i></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="dropdown">
+        <label for="stats">Select Progress Type</label>
+        <select id="stats">
+            <option value="duration">Duration</option>
+            <option value="calories">Calories Burned</option>
+            <option value="reps">Reps</option>
+            <option value="sets">Sets</option>
+        </select>
     </div>
-  </nav>
 
-  <div class="dropdown">
-    <label for="stats">Select Progress Type</label>
-    <select id="stats">
-      <option value="duration">Duration</option>
-      <option value="calories">Calories Burned</option>
-      <option value="reps">Reps</option>
-      <option value="sets">Sets</option>
-      <!--<option value="streaks">Streaks</option>-->
-      <!-- Add more as needed -->
-    </select>
-  </div>
+    <div class="chart-wrapper">
+        <canvas id="myChart" width="600" height="400"></canvas>
+    </div>
 
-  <div class="chart-wrapper">
-    <canvas id="myChart" width="600" height="400"></canvas>
-  </div>
-  <button class="Update">Click  </button>
+    <div class="progress-container">
+        <div class="progress-bar">0%</div>
+    </div>
 
-  <script>
+    <table id="progressTable" border="1">
+        <thead>
+            <tr>
+                <th>Exercise</th>
+                <th>Type</th>
+                <th>Reps</th>
+                <th>Sets</th>
+                <th>Duration</th>
+                <th>Calories</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <button class="Update">Click</button>
 
-    window.addEventListener('DOMContentLoaded', () => {
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            fetch('/progress')
+                .then(response => {
+                    // Check if the response is successful
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(json => {
+                    // Log the received data to ensure it's correct
+                    console.log("Fetched data:", json);
 
-       fetch('/progress')
-        .then(response => response.json())
-        .then(json => {
-        const workouts = json;
-        const labels = workouts.map(w => w.exercisename);
+                    const workouts = json;
+                    // If no data, display a message and exit
+                    if (workouts.length === 0) {
+                        console.log("No workout data to display.");
+                        const canvas = document.getElementById("myChart");
+                        const ctx = canvas.getContext("2d");
+                        ctx.font = "20px Arial";
+                        ctx.textAlign = "center";
+                        ctx.fillText("No workout data available.", canvas.width / 2, canvas.height / 2);
+                        return;
+                    }
 
-        // Metric extractors
-        const metrics = {
-          duration: {
-            label: 'Workout Duration (min)',
-            values: workouts.map(w => w.duration),
-            color: '#ad0303'
-          },
-          calories: {
-            label: 'Calories Burned',
-            values: workouts.map(w => w.calories || 0),
-            color: '#036aad'
-          },
-          reps: {
-            label: 'Reps',
-            values: workouts.map(w => w.reps || 0),
-            color: '#795548'
-          },
-          sets: {
-            label: 'Sets',
-            values: workouts.map(w => w.sets || 0),
-            color: '#009688'
-          },
-         
-        };
+                    const labels = workouts.map(w => w.exercisename);
 
-        console.log("Labels:", labels);
-        console.log("Duration values:", metrics.duration.values);
+                    const metrics = {
+                        duration: {
+                            label: 'Workout Duration (min)',
+                            values: workouts.map(w => w.duration || 0),
+                            color: '#ad0303'
+                        },
+                        calories: {
+                            label: 'Calories Burned',
+                            values: workouts.map(w => w.calories || 0),
+                            color: '#036aad'
+                        },
+                        reps: {
+                            label: 'Reps',
+                            values: workouts.map(w => w.reps || 0),
+                            color: '#795548'
+                        },
+                        sets: {
+                            label: 'Sets',
+                            values: workouts.map(w => w.sets || 0),
+                            color: '#009688'
+                        },
+                    };
 
-        const ctx = document.getElementById("myChart").getContext("2d");
-        let chart = new Chart(ctx, {
-          type: "line",
-          data: {
-            labels: labels,
-            datasets: [{
-              label: metrics.duration.label,
-              data: metrics.duration.values,
-              borderColor: metrics.duration.color,
-              backgroundColor: "transparent",
-              pointRadius: 4,
-              pointBackgroundColor: metrics.duration.color
-            }]
-          },
-          options: {
-            responsive: true,
-            animation: {
-              duration: 1500,
-              easing: 'easeOutQuart'
-            },
-            scales: {
-              y: {
-                beginAtZero: true 
-              }
-            }
-          }
+                    const ctx = document.getElementById("myChart").getContext("2d");
+                    let chart = new Chart(ctx, {
+                        type: "line",
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: metrics.duration.label,
+                                data: metrics.duration.values,
+                                borderColor: metrics.duration.color,
+                                backgroundColor: "transparent",
+                                pointRadius: 4,
+                                pointBackgroundColor: metrics.duration.color
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            animation: {
+                                duration: 1500,
+                                easing: 'easeOutQuart'
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
+                    document.getElementById("stats").addEventListener("change", event => {
+                        const selected = event.target.value;
+                        const metric = metrics[selected];
+                        chart.data.datasets[0].label = metric.label;
+                        chart.data.datasets[0].data = metric.values;
+                        chart.data.datasets[0].borderColor = metric.color;
+                        chart.data.datasets[0].pointBackgroundColor = metric.color;
+                        chart.update();
+                    });
+
+                    // Progress bar function and call
+                    function updateProgress(percent) {
+                        const progressBar = document.querySelector('.progress-bar');
+                        if (progressBar) {
+                            progressBar.style.width = `${percent}%`;
+                            progressBar.textContent = `${percent}%`;
+                        }
+                    }
+
+                    const totalWorkouts = workouts.length;
+                    const completedWorkouts = workouts.filter(w => w.duration > 0).length;
+                    const progressPercent = totalWorkouts > 0
+                        ? Math.round((completedWorkouts / totalWorkouts) * 100)
+                        : 0;
+                    updateProgress(progressPercent);
+
+                    // Populate the table
+                    const tbody = document.querySelector('#progressTable tbody');
+                    workouts.forEach(workout => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${workout.exercisename}</td>
+                            <td>${workout.w_type}</td>
+                            <td>${workout.reps}</td>
+                            <td>${workout.sets}</td>
+                            <td>${workout.duration}</td>
+                            <td>${workout.calories}</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                })
+                .catch(err => {
+                    console.error("Failed to fetch or parse progress data:", err);
+                    const canvas = document.getElementById("myChart");
+                    const ctx = canvas.getContext("2d");
+                    ctx.font = "20px Arial";
+                    ctx.textAlign = "center";
+                    ctx.fillText("Failed to load chart data.", canvas.width / 2, canvas.height / 2);
+                });
         });
-        
-
-        document.getElementById("stats").addEventListener("change", event => {
-          const selected = event.target.value;
-          const metric = metrics[selected];
-
-          chart.data.datasets[0].label = metric.label;
-          chart.data.datasets[0].data = metric.values;
-          chart.data.datasets[0].borderColor = metric.color;
-          chart.data.datasets[0].pointBackgroundColor = metric.color;
-          chart.update();
-        });
-        console.log("Chart loaded");
-
-        const totalWorkouts = workouts.length;
-        const completedWorkouts = workouts.filter(w => w.duration > 0).length;
-
-        const progressPercent = totalWorkouts > 0
-        ? Math.round((completedWorkouts / totalWorkouts) * 100)
-        : 0;
-        updateProgress(progressPercent)
-
-        function updateProgress(percent) {
-          console.log(`Progress: ${percent}%`);
-            // Optionally update a DOM element here
-          }
-          console.log("Chart loaded");
-        })
-        .catch(err => {
-          console.error("Failed to fetch progress data:", err);
-
-        });
-
-
-      });
-   
-  </script>
+    </script>
 </body>
 </html>
