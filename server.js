@@ -25,6 +25,7 @@ app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 app.use(express.static(path.join(__dirname))); // For CSS, JS, images
 app.use(cors()); // Allow cross-origin requests
+app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.get('/', (req, res) => {
@@ -49,9 +50,9 @@ app.delete('/workouts', (req, res) => {
     res.send('workout deleted');  //log a workout and create a workout
 });
 
-app.patch('/stats', (req, res) => {
-    res.send('Stats updated succesfully'); //change stats
-});
+//app.patch('/stats', (req, res) => {
+//    res.send('Stats updated succesfully'); //change stats
+//});
 
 //app.patch('/workouts', (req, res) => {
 //    res.send('Workout rescheduled to next available slot'); //resceduale workout
@@ -128,7 +129,8 @@ app.post('/workouts', async (req, res) => {
 //updating stats or creating stats. *
 
 app.post('/submit', async (req, res) => {
-    const { goals, schedule, activity_level, height, weight, gender,dob } = req.body;
+    const { goals, schedule, activity_level, heightFeet, heightInches, weight, gender,dob } = req.body;
+
 
     const normalizeArray = (input) => {
         if (Array.isArray(input)) return input;
@@ -141,12 +143,12 @@ app.post('/submit', async (req, res) => {
     const goalsArray = normalizeArray(goals);
     const scheduleArray = normalizeArray(schedule);
     const activityLevelArray = normalizeArray(activity_level);
-    const genderArray = normalizeArray(gender);
+    genderArray = normalizeArray(gender);
 
     try {
         await pool.query(
-            'INSERT INTO stats (goals, schedule, activity_level, height, weight, gender, dob) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-            [goalsArray, scheduleArray, activityLevelArray, height, weight, genderArray, dob]
+            'INSERT INTO stats (goals, schedule, activity_level, heightFeet, heightInches, weight, gender, dob) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+            [goalsArray, scheduleArray, activityLevelArray, heightFeet, heightInches, weight, genderArray, dob]
 
         );
         res.send('Stats updated succesfully');

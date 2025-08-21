@@ -29,6 +29,33 @@ input[type="text"] {
     margin: 0 auto;
     margin-top: 35px;
 }
+/*select{  /*for dropdown 
+    padding: 5px 10px;
+    width: 90%;
+    border-radius: 8px;
+    border: 1px solid #ad0303;
+    background-color: transparent;
+    color: black;  /* Add this line */
+
+    #heightFeet,
+    #heightinches {
+    display: inline-block;
+    width: 120px;
+    margin-right: 8px;
+    padding:6px 10px;
+    border-radius: 8px;
+    border: 1px solid #ad0303;
+    background-color: white;
+    color: black !important;
+    font-size: 14px;
+}
+
+    #heightFeet option,
+    #heightinches option {
+    color: black !important;
+    background-color: white; /* Optional, but ensures visibility */
+}
+
 .stats-box button {
     display: block;
     width: 100%;
@@ -45,7 +72,11 @@ input[type="text"] {
 }
 
 .stats-box button:hover {
-    background-color: #880202;
+    background-color: #fff;
+    color: #ad0303;
+    border-color: #ad0303;
+    border-style: solid;
+    border-width: 1px;
 }
 
 .height-cell {
