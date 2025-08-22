@@ -91,6 +91,9 @@ app.get('/stats', (req, res) => {
     }
 });
 
+//create a workout
+
+
 //log workouts
 app.post('/workouts', async (req, res) => {
     const workoutsToLog = req.body;
@@ -159,14 +162,18 @@ app.post('/submit', async (req, res) => {
 });
 
 
-//create a workout
 
-// get progress from workout page
+// get progress from workout page and stats page
 app.get('/progress', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM workouts');
-        res.json(result.rows)
+        const result2 = await pool.query('SELECT weight FROM stats');
+        res.json({
+            workouts: result.rows,
+            stats: result2.rows
+        });
     } catch (err){
+        console.error('Error fetching progress data:', err);
         res.status(500).json({error: 'Something went wrong'})
     }
 });

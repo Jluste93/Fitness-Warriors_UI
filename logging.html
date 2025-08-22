@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Log Your Weight</title>
+
+</head>
+<body>
+
+  <form id="weightForm">
+    <h2>Log Your Weight</h2>
+    <label for="weight">Weight (lbs)</label>
+    <input type="number" id="weight" name="weight" required min="0" step="0.1">
+
+    <label for="date">Date</label>
+    <input type="date" id="date" name="date" required>
+
+    <button type="submit">Submit</button>
+    <div class="message" id="message"></div>
+  </form>
+
+  <script>
+    document.getElementById('weightForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const weight = document.getElementById('weight').value;
+      const date = document.getElementById('date').value;
+
+      try {
+        const res = await fetch('/log-weight', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ weight, date })
+        });
+
+        const result = await res.json();
+        document.getElementById('message').textContent = result.message || 'Weight logged!';
+        document.getElementById('weightForm').reset();
+      } catch (err) {
+        document.getElementById('message').textContent = 'Error logging weight.';
+        console.error(err);
+      }
+    });
+  </script>
+
+</body>
+</html>
