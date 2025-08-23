@@ -47,6 +47,7 @@
     margin-top: -30px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     animation: fadeInUp 1s; /* Smooth animation when section loads */
+    max-width: 500px;
 }
 
 .input-section h2 {
@@ -73,15 +74,24 @@
   border-left: 5px solid #ad0303;
   animation: fadeIn 0.5s;
 }
+#Enter-exercise {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  padding: 40px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
 
 #Enter-exercise input {
-    width: calc(50% - 10px); /*split*/
+    width: calc(100%); /*split*/
     padding: 10px;
     margin: 5px;
     border: 1px solid #bdc3c7;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: 16px;
 }
 #Enter-exercise input:invalid {
     border-color:#ad0303;
@@ -165,9 +175,9 @@
 }
 
 
-hr{
+/*hr{
     width: auto;
-}
+}*/
 .exerciseNotes{
     margin-top: 20px;
 
@@ -187,10 +197,10 @@ hr{
     border-radius: 20px;
     border: 2px solid #ad0303;
 }
-.exerciseNotes{
+/*.exerciseNotes{
     margin-top: 20px;
     
-}
+}*/
 .logWorkoutButton{
     background-color: #ad0303;
     color: #ffffff;

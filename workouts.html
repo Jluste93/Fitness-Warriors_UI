@@ -4,218 +4,131 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Workouts</title>
-  <link rel="stylesheet" href="nav.css">
-  <link rel="stylesheet" href="workouts.css">
-  <!--<link rel="stylesheet" href="logging.css">-->
+
+  <!-- Consolidated styles -->
+   <link rel="stylesheet" href="nav.css">
+   <link rel="stylesheet" href="logging.css">
+
+  <!-- Fonts and Icons -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Material Web Components -->
   <script type="module" src="https://cdn.jsdelivr.net/npm/@material/web/button/outlined-button.js"></script>
   <script type="module" src="https://unpkg.com/@material/web/all.js"></script>
-  
-  <!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  -->
-  
-
-
 </head>
 
 <body>
-    <nav>
-        <div class="nav-wrapper">
-            <a href="#" class="brand-logo">Fitness Warriors</a>
-            <ul id="nav-mobile" class="right">
-                <li><a href="index.html">Dashboard</a></li>
-                <li><a href="progress.html">Progress</a></li>
-                <li><a href="workouts.html">Workouts</a></li>
-                <li><a href="stats.html">Stats</a></li>
-                <li><a href="Profile.html"><i class="material-icons">account_circle</i></li></a>
-            </ul>
-        </div>
-    </nav>
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">Fitness Warriors</a>
+      <ul id="nav-mobile" class="right">
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="progress.html">Progress</a></li>
+        <li><a href="workouts.html">Workouts</a></li>
+        <li><a href="stats.html">Stats</a></li>
+        <li><a href="Profile.html"><i class="material-icons">account_circle</i></a></li>
+      </ul>
+    </div>
+  </nav>
 
-    <div class="content"> 
-        <div class="workoutPage">
-            <header>
-                <h1> Log Page</h1>  <!--change name-->
-                <!-- <p>Track your workouts and calories burned</p>-->
-            </header>
-
-            <!--date setion-->
-                <div class="dateExcercise">
-                    <h2 class="excerciseFor"> Excercise For:</h2>
-                        <div class="dateButton">
-                            <button>
-                                <i class="arrow left"></i>
-                            </button>
-                            <button>mm/dd/yyyy</button>
-                            <button>
-                                <i class="arrow right"></i>
-                            </button>
-                        </div>
-                </div>    
-        </div>
-
-
-        <hr>
-
-        <section class="input-section">
-            <h2>Add workout</h2>
-            <form id="Enter-exercise">
-                <input type="text" id="exercise-name" placeholder="Exercise / Workout Name" required>
-                <input type="number" id="Reps" placeholder="Reps">
-                <input type="number" id="Sets" placeholder="Sets">
-                <input type="number" id="duration" placeholder="Duration" required min="1">
-                <input type="number" id="calories" placeholder="Calories" required min="1">
-                <select name="Type" id="w_type">
-                        <option value="Cardio">Cardio</option>
-                        <option value="Weight Lifting">Weight Lifting</option>
-                        <option value="HIIT">HIIT</option>
-                        <option value="Yoga">Yoga</option>
-                        <option value="Something Else">Something Else</option>
-                </select>
-                <button type="submit"> Add Workout</button>
-            </form>
-            
-
-            <!--displayed calories-->
-            <div class="total-calories">
-                <h3>Total Calories Burned: <span id="total-calories"> 0</span></h3>
-            </div>
-
-
-             <!--duration workouts-->
-            <div class="workout-duration">
-                <h3>Duration <span id="workout-duration"> 0 min</span></h3>
-            </div>
-            <!--workout list-->
-            <section class="workout-list">
-                <h2>Workouts Logged</h2>
-                <ul id="workouts"></ul>
-            </section>
-
-
-        </section>
-
-
-        <div>
-            <form class="exerciseNotes">
-                <label for="Notes" class="inputLabel">Exercise Notes</label>
-                <input type="text" class="inputField" value="">
-            </form>
-        </div>
-
-       <button class="logWorkoutButton" type="button">Log Workout</button>
+  <div class="content">
+    <div class="workoutPage">
+      <header>
+        <h1> Log Page</h1>  <!--change name-->
+        <!-- <p>Track your workouts and calories burned</p>-->
+      </header>
     </div>
 
-    <div class = "otherLogging">
+    <div class="grid-wrapper">
+        <div class="form-grid">
+  <div class="left-column">
+    <form id="weightForm">
+      <h2>Log Your Weight</h2>
+      <label for="weight">Weight (lbs)</label>
+      <input type="number" id="weight" name="weight" required min="0" step="0.1">
+      <label for="weight-date">Date</label>
+      <input type="date" id="weight-date" name="date" required>
+      <button type="submit">Submit</button>
+      <div class="message" id="weight-message"></div>
+    </form>
 
-        <form id="weightForm">
-            <h2>Log Your Weight</h2>
+    <form id="waistForm">
+      <h2>Waist Measurement</h2>
+      <label for="waist">Waist (in)</label>
+      <input type="number" id="waist" name="waist" required min="0" step="0.1">
+      <label for="waist-date">Date</label>
+      <input type="date" id="waist-date" name="date" required>
+      <button type="submit">Submit</button>
+      <div class="message" id="waist-message"></div>
+    </form>
 
-            <label for="weight">Weight (lbs)</label>
-            <input type="number" id="weight" name="weight" required min="0" step="0.1">
+    <form id="bodyFatForm">
+      <h2>Body Fat</h2>
+      <label for="bodyfat">Body Fat (%)</label>
+      <input type="number" id="bodyfat" name="bodyfat" required min="0" step="0.1">
+      <label for="bodyfat-date">Date</label>
+      <input type="date" id="bodyfat-date" name="date" required>
+      <button type="submit">Submit</button>
+      <div class="message" id="bodyfat-message"></div>
+    </form>
+  </div>
 
-            <label for="date">Date</label>
-            <input type="date" id="date" name="date" required>
+  <section class="input-section">
+    <div class="dateExcercise">
+      <h2 class="excerciseFor">Exercise For:</h2>
+      <div class="dateButton">
+        <input type="date" id="workout-date" name="date" required>
+      </div>
+    </div>
 
-            <button type="submit">Submit</button>
-            <div class="message" id="message"></div>
-        </form>
+    <h2>Add workout</h2>
+    <form id="Enter-exercise">
+      <input type="text" id="exercise-name" placeholder="Exercise / Workout Name" required>
+      <input type="number" id="Reps" placeholder="Reps">
+      <input type="number" id="Sets" placeholder="Sets">
+      <input type="number" id="duration" placeholder="Duration" required min="1">
+      <input type="number" id="calories" placeholder="Calories" required min="1">
+      <select name="Type" id="w_type">
+        <option value="Cardio">Cardio</option>
+        <option value="Weight Lifting">Weight Lifting</option>
+        <option value="HIIT">HIIT</option>
+        <option value="Yoga">Yoga</option>
+        <option value="Something Else">Something Else</option>
+      </select>
+      <button type="submit">Add Workout</button>
+    </form>
 
-        <form id="waistForm">
-                <h2>Waist Measurement</h2>
+    <section class="workout-list">
+      <h2>Workouts Logged</h2>
+      <ul id="workouts"></ul>
+    </section>
 
-            <label for="waist">Waist (in)</label>
-            <input type="number" id="waist" name="waist" required min="0" step="0.1">
+    <button class="logWorkoutButton" type="button">Log Workouts for Today</button>
 
-            <label for="date">Date</label>
-            <input type="date" id="date" name="date" required>
+    <div class="summary-boxes">
+      <div class="total-calories">
+        <h3>Total Calories Burned: <span id="total-calories">0</span></h3>
+      </div>
 
-            <button type="submit">Submit</button>
-            <div class="message" id="message"></div>
-        </form>
+      <div class="workout-duration">
+        <h3>Duration <span id="workout-duration">0 min</span></h3>
+      </div>
+    </div>
+  </section>
+</div>
 
+      </section>
+     </div>
 
-        <form id="bodyFatForm">
-            <h2>Body Fat</h2>
-
-            <label for="bodyfat">Body Fat (%)</label>
-            <input type="number" id="bodyfat" name="bodyfat" required min="0" step="0.1">
-
-            <label for="date">Date</label>
-            <input type="date" id="date" name="date" required>
-
-            <button type="submit">Submit</button>
-            <div class="message" id="message"></div>
-        </form>
 
     </div>
 
+     
+  </div>
 
-
-  <script>
-    ['weightForm', 'waistForm', 'bodyFatForm'].forEach(id => {
-      document.getElementById(id).addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const date = document.getElementById('date').value;
-        let endpoint, payload;
-
-        if(id === 'weightForm') {
-          const weight = document.getElementById('weight').value;
-          endpoint = '/log-weight';
-          payload ={ weight, data };
-        } else if (id  === 'waistForm') {
-          const waist = document.getElementById('waist').value;
-          endpoint = '/log-waist';
-          payload = { waist, date};
-        }else if (id === 'bodyFatForm') {
-          const bodyfat = document.getElementById('bodyfat').value;
-          endpoint = '/log-bodyfat';
-          payload = {bodyfat, date}
-        }
-
-      try {
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-
-        const result = await res.json();
-        document.getElementById('message').textContent = result.message || 'Weight logged!';
-        document.getElementById('weightForm').reset();
-      } catch (err) {
-        document.getElementById('message').textContent = 'Error logging weight.';
-        console.error(err);
-      }
-    });
-  });
-
-  </script>
-    
-<!--<script>
-        function sendData(workout_name, Sets, Reps, weight) {
-            fetch('/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    workout_name,
-                    sets,
-                    reps,
-                    weight
-                })
-            })
-            .then(res => res.text())
-            .then(data => console.log(data))
-            .catch(err => console.error('Error', err));
-        }
-    </script>-->
-
-<script src="workouts.js"></script>
-
+  <!-- JS Logic -->
+  <script src="workouts.js"></script>
+  <script src="logging.js"></script>
 </body>
-
 </html>
