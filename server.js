@@ -12,6 +12,7 @@ const pool = new Pool ({
     database: 'postgres',
     password: 'nordaj93',
     port: 5432,
+
 });
 
 pool.connect()
@@ -161,8 +162,8 @@ app.post('/submit', async (req, res) => {
 
 
 
-// get progress from workout page and stats page. Yhis accesses the first chart
-app.get('/progress', async (req, res) => {
+// get progress from workout page and stats page. This accesses the first chart
+app.get('/api/progress-data', async (req, res) => {  //originally '/progress'
     try {
         const result = await pool.query('SELECT * FROM workouts');
         const result2 = await pool.query('SELECT weight FROM stats');

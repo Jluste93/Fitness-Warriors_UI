@@ -61,7 +61,7 @@
 
     <script>
         window.addEventListener('DOMContentLoaded', () => {
-            fetch('/progress')
+            fetch('http://3.147.83.249:3000/api/progress-data')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
