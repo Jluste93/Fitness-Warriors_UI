@@ -241,7 +241,7 @@ if (!schedule_date) {
     
 });
 
-app.get('/api/test', (req, res) => {
+app.get('/test', (req, res) => {
   res.json({ message: 'Test route is working!' });
 });
     
