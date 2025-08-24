@@ -9,8 +9,8 @@ const { Pool } = require('pg');
 
 const pool = new Pool ({
     user: 'postgres',
-    host: 'localhost', //changed from localhost and rds-ca-rsa2048-g1 .....database-1.c322e60egpt1.us-east-2.rds.amazonaws.com
-    database: 'postgres',
+    host: '127.0.0.1', //changed from localhost and rds-ca-rsa2048-g1 .....database-1.c322e60egpt1.us-east-2.rds.amazonaws.com
+    database: 'fitness_warriors',
     password: 'nordaj93',
     port: 5432,
 
@@ -168,11 +168,7 @@ app.post('/submit', async (req, res) => {
 app.get('/progress', async (req, res) => {  //originally '/progress'
     try {
         const result = await pool.query('SELECT * FROM workouts');
-        const result2 = await pool.query('SELECT weight FROM stats');
-        res.json({
-            workouts: result.rows,
-            stats: result2.rows
-        });
+        res.json({ workouts: result.rows });
     } catch (err){
         console.error('Error fetching progress data:', err);
         res.status(500).json({error: 'Something went wrong'})
