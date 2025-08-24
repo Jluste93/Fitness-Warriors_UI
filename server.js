@@ -1,5 +1,3 @@
-
-
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -38,7 +36,7 @@ app.delete('/workouts', (req, res) => {
 });
 
 
-//users
+//users not used yet
 app.post('/users', async (req, res) => {
     const { users_id, name, email, password } = req.body;
 
@@ -68,10 +66,30 @@ app.get('/stats', (req, res) => {
     }
 });
 
+
+//log weight, waist, and body fat
+app.post('/log-weight', async (req, res) => {
+    const {weight, date} = req.body;
+    //need logic here
+    res.json({ message: 'Weight logged succesfully!'});
+});
+
+app.post('/log-waist', async (req, res) => {
+    const {waist, date} = req.body;
+    //need logic here
+    res.json({ message: 'Waist logged succesfully!'});
+});
+
+app.post('/log-bodyfat', (req, res) => {
+  const { bodyfat, date } = req.body;
+  res.json({ message: 'Body fat logged successfully!' });
+
+});
+
+
+
 //create a workout
-
-
-//log workouts and other 
+//log workouts
 app.post('/workouts', async (req, res) => {
     const workoutsToLog = req.body;
 
@@ -107,7 +125,7 @@ app.post('/workouts', async (req, res) => {
 });
 
 //logging stats  needs to be on workout log page
-app.post('/logging')
+//app.post('/logging')
 
 //updating stats or creating stats. *
 
@@ -158,7 +176,7 @@ app.get('/progress', async (req, res) => {
     }
 });
 
-//delete
+//delete  not used yet
 app.delete('/workouts/:id', async (req, res) => {
     const workouts_id  = req.params.id;
 
@@ -200,7 +218,7 @@ app.patch('/stats/:id', async (req, res) => {
   }
 });
 
-//rescedual
+//rescedual not used yet
 app.patch('/:id/reschedule', async (req, res) => {
     const schedule_id = req.params.id;
     const {schedule_date} = req.body;
