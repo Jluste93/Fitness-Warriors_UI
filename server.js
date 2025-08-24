@@ -27,6 +27,7 @@ app.use(express.static(path.join(__dirname))); // For CSS, JS, images
 app.use(cors()); // Allow cross-origin requests
 app.use(express.urlencoded({ extended: true }));
 
+
 // Routes
 app.get('/', (req, res) => {
   res.send('Server is alive!');
@@ -164,7 +165,7 @@ app.post('/submit', async (req, res) => {
 
 
 // get progress from workout page and stats page. This accesses the first chart
-app.get('/api/progress', async (req, res) => {  //originally '/progress'
+app.get('/progress', async (req, res) => {  //originally '/progress'
     try {
         const result = await pool.query('SELECT * FROM workouts');
         const result2 = await pool.query('SELECT weight FROM stats');
@@ -177,6 +178,8 @@ app.get('/api/progress', async (req, res) => {  //originally '/progress'
         res.status(500).json({error: 'Something went wrong'})
     }
 });
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 //delete  not used yet
