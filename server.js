@@ -236,6 +236,10 @@ if (!schedule_date) {
     }
     
 });
+
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'Test route is working!' });
+});
     
 app.listen(3000, '0.0.0.0', () => {
     console.log('Server running on port 3000');
