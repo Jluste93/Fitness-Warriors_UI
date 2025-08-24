@@ -5,14 +5,12 @@ const cors = require('cors'); // new3
 const PORT = process.env.PORT || 3000;
 const { Pool } = require('pg');
 
-
 const pool = new Pool ({
     user: 'postgres',
-    host: 'localhost', //changed from localhost and rds-ca-rsa2048-g1 .....database-1.c322e60egpt1.us-east-2.rds.amazonaws.com
+    host: 'localhost',
     database: 'postgres',
     password: 'nordaj93',
     port: 5432,
-
 });
 
 pool.connect()
@@ -23,30 +21,24 @@ pool.connect()
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 app.use(express.static(path.join(__dirname))); // For CSS, JS, images
-app.use(cors()); // Allow cross-origin requests
-app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // Routes
 app.get('/', (req, res) => {
   res.send('Server is alive!');
 });
 
-
 app.delete('/workouts', (req, res) => {
-    res.send('workout deleted');  //log a workout and create a workout
+    res.send('workout deleted');
 });
 
-
-//users not used yet
 app.post('/users', async (req, res) => {
     const { users_id, name, email, password } = req.body;
-
     try {
         await pool.query(
             'INSERT INTO users (users_id, name, email, password) VALUES ($1, $2, $3, $4)',
             [users_id, name, email, password]
         );
-
         res.send('User info submitted.');
     } catch (err) {
         console.log('Missing information.', req.body);
@@ -54,85 +46,63 @@ app.post('/users', async (req, res) => {
     }
 });
 
-//check stats
 app.get('/stats', (req, res) => {
-    const path = require('path'); // might need to be moved above
-
-    try{
+    const path = require('path');
+    try {
         console.log('Stats page requested');
         res.sendFile(path.join(__dirname,'stats.html'));
-
-    }catch (err){
+    } catch (err){
         res.status(400).send('The information cannot be found');
     }
 });
 
-
-//log weight, waist, and body fat
 app.post('/log-weight', async (req, res) => {
     const {weight, date} = req.body;
-    //need logic here
     res.json({ message: 'Weight logged succesfully!'});
 });
 
 app.post('/log-waist', async (req, res) => {
     const {waist, date} = req.body;
-    //need logic here
     res.json({ message: 'Waist logged succesfully!'});
 });
 
 app.post('/log-bodyfat', (req, res) => {
   const { bodyfat, date } = req.body;
   res.json({ message: 'Body fat logged successfully!' });
-
 });
 
-
-
-//create a workout
-//log workouts
 app.post('/workouts', async (req, res) => {
     const workoutsToLog = req.body;
-
     if (!Array.isArray(workoutsToLog) || workoutsToLog.length === 0) {
         return res.status(400).send('Invalid Request');
-        }
-
-        try {
-            for(const workout of workoutsToLog) {
-                const { exercisename, w_type, Reps, Sets, duration, calories} = workout; // removed users_id temp
-                if ( exercisename == null ||
-                    w_type == null ||
-                    Reps == null ||
-                    Sets == null ||
-                    duration == null || 
-                    calories == null
-                )
-                {
-                    return res.status(400).send('One or more workout entries are missing required information.');
-                }
-
-                await pool.query(
-                    'INSERT INTO workouts (exercisename, w_type, Reps, Sets, duration, calories) VALUES ($1, $2, $3, $4, $5, $6)',
-                    [exercisename, w_type, Reps, Sets, duration, calories]  //add users_id
-                );
+    }
+    try {
+        for(const workout of workoutsToLog) {
+            const { exercisename, w_type, Reps, Sets, duration, calories} = workout;
+            if (
+                exercisename == null ||
+                w_type == null ||
+                Reps == null ||
+                Sets == null ||
+                duration == null || 
+                calories == null
+            ) {
+                return res.status(400).send('One or more workout entries are missing required information.');
             }
-            
-            res.status(201).send('Workout logged successfully');
-        } catch (err) {
-            console.error('Error logging workout:', err);
-            res.status(500).send('Failed to log workout');
+            await pool.query(
+                'INSERT INTO workouts (exercisename, w_type, Reps, Sets, duration, calories) VALUES ($1, $2, $3, $4, $5, $6)',
+                [exercisename, w_type, Reps, Sets, duration, calories]
+            );
         }
+        res.status(201).send('Workout logged successfully');
+    } catch (err) {
+        console.error('Error logging workout:', err);
+        res.status(500).send('Failed to log workout');
+    }
 });
-
-//logging stats  needs to be on workout log page
-//app.post('/logging')
-
-//updating stats or creating stats. *
 
 app.post('/submit', async (req, res) => {
     const { goals, schedule, activity_level, heightFeet, heightInches, weight, gender,dob } = req.body;
-
 
     const normalizeArray = (input) => {
         if (Array.isArray(input)) return input;
@@ -140,7 +110,7 @@ app.post('/submit', async (req, res) => {
             return input.trim() === '' ? [] : [input];
         }
         return [];
-  };
+    };
 
     const goalsArray = normalizeArray(goals);
     const scheduleArray = normalizeArray(schedule);
@@ -151,7 +121,6 @@ app.post('/submit', async (req, res) => {
         await pool.query(
             'INSERT INTO stats (goals, schedule, activity_level, heightFeet, heightInches, weight, gender, dob) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
             [goalsArray, scheduleArray, activityLevelArray, heightFeet, heightInches, weight, genderArray, dob]
-
         );
         res.send('Stats updated succesfully');
     } catch (err) {
@@ -160,9 +129,6 @@ app.post('/submit', async (req, res) => {
     }
 });
 
-
-
-// get progress from workout page and stats page. Yhis accesses the first chart
 app.get('/progress', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM workouts');
@@ -177,20 +143,16 @@ app.get('/progress', async (req, res) => {
     }
 });
 
-//delete  not used yet
 app.delete('/workouts/:id', async (req, res) => {
     const workouts_id  = req.params.id;
-
     try {
         const result = await pool.query(
             'DELETE FROM workouts WHERE workouts_id = $1 RETURNING *',
             [workouts_id]
         );
-
-        if (result.rowCount === 0) { // no matches found
+        if (result.rowCount === 0) {
             return res.status(404).send('No workout entry exists with the specified ID');
         }
-
         res.status(200).send('Workout deleted successfully');
     } catch (err) {
         console.error('Error deleting workout:', err);
@@ -198,7 +160,6 @@ app.delete('/workouts/:id', async (req, res) => {
     }
 });
 
-// change stats
 app.patch('/stats/:id', async (req, res) => {
   const stats_id = req.params.id;
   const { goals, schedule, activity_level, weight } = req.body;
@@ -219,23 +180,21 @@ app.patch('/stats/:id', async (req, res) => {
   }
 });
 
-//rescedual not used yet
 app.patch('/:id/reschedule', async (req, res) => {
     const schedule_id = req.params.id;
     const {schedule_date} = req.body;
 
-if (!schedule_date) {
+    if (!schedule_date) {
         res.status(400).send('You did not log anything.') 
-    } else{
+    } else {
         await pool.query(
             'UPDATE schedule SET rescheduleddate = $1 WHERE id = $2',
-            [schedule_date, schedule_id]);
- 
+            [schedule_date, schedule_id]
+        );
         res.json({ message: `Workout for ${schedule_id} rescheduled to next available slot`, schedule_date });    
     }
-    
 });
-    
+
 app.listen(3000, '0.0.0.0', () => {
     console.log('Server running on port 3000');
 });
