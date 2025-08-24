@@ -32,34 +32,11 @@ app.get('/', (req, res) => {
   res.send('Server is alive!');
 });
 
-//app.post('/users', (req, res) => {
-//    res.send('Stats added successfully!. Account created successfully.');
-//});
-
-//app.get('/stats', (req, res) => {
-//    res.sendFile(path.join(__dirname, 'stats.html'));
-//});
-
-//app.post('/workouts', (req, res) => {
-//    res.send('workouts.html');  //log a workout and create a workout
-//});
-
-
 
 app.delete('/workouts', (req, res) => {
     res.send('workout deleted');  //log a workout and create a workout
 });
 
-//app.patch('/stats', (req, res) => {
-//    res.send('Stats updated succesfully'); //change stats
-//});
-
-//app.patch('/workouts', (req, res) => {
-//    res.send('Workout rescheduled to next available slot'); //resceduale workout
-//});
-
-
-// These routes handle form submission. May need to go back and mention foreign keys
 
 //users
 app.post('/users', async (req, res) => {
@@ -94,7 +71,7 @@ app.get('/stats', (req, res) => {
 //create a workout
 
 
-//log workouts
+//log workouts and other 
 app.post('/workouts', async (req, res) => {
     const workoutsToLog = req.body;
 
@@ -128,6 +105,9 @@ app.post('/workouts', async (req, res) => {
             res.status(500).send('Failed to log workout');
         }
 });
+
+//logging stats  needs to be on workout log page
+app.post('/logging')
 
 //updating stats or creating stats. *
 
@@ -163,7 +143,7 @@ app.post('/submit', async (req, res) => {
 
 
 
-// get progress from workout page and stats page
+// get progress from workout page and stats page. Yhis accesses the first chart
 app.get('/progress', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM workouts');

@@ -32,11 +32,10 @@
             <option value="calories">Calories Burned</option>
             <option value="reps">Reps</option>
             <option value="sets">Sets</option>
-            <option value="bodyWeight">Body Weight</option>
-
         </select>
     </div>
 
+        <!--First Chart-->
     <div class="chart-wrapper">
         <canvas id="myChart" width="600" height="400"></canvas>
     </div>
@@ -54,7 +53,6 @@
                 <th>Sets</th>
                 <th>Duration</th>
                 <th>Calories</th>
-                <th>Body Weight</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -65,22 +63,17 @@
         window.addEventListener('DOMContentLoaded', () => {
             fetch('/progress')
                 .then(response => {
-                    // Check if the response is successful
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
                     return response.json();
                 })
                 .then(json => {
-                    // Log the received data to ensure it's correct
                     console.log("Fetched data:", json);
 
                     const workouts = json.workouts || [];
-                    const progressMetrics = json.metrics || [];
 
-                    // If no data, display a message and exit
                     if (workouts.length === 0) {
-                        console.log("No workout data to display.");
                         const canvas = document.getElementById("myChart");
                         const ctx = canvas.getContext("2d");
                         ctx.font = "20px Arial";
@@ -111,14 +104,9 @@
                             label: 'Sets',
                             values: workouts.map(w => w.sets || 0),
                             color: '#009688'
-                        },
-                        bodyWeight: {
-                            label: 'Body Weight',
-                            values: workouts.map(w => w.bodyWeight || 0),
-                            color: '#607d8b'
-                        },
+                        }
                     };
-
+                        //chart created here
                     const ctx = document.getElementById("myChart").getContext("2d");
                     let chart = new Chart(ctx, {
                         type: "line",
@@ -147,7 +135,7 @@
                             }
                         }
                     });
-
+                        // updates chart
                     document.getElementById("stats").addEventListener("change", event => {
                         const selected = event.target.value;
                         const metric = metrics[selected];
@@ -156,9 +144,8 @@
                         chart.data.datasets[0].borderColor = metric.color;
                         chart.data.datasets[0].pointBackgroundColor = metric.color;
                         chart.update();
-                    });
+                    }); //end of actual chart
 
-                    // Progress bar function and call
                     function updateProgress(percent) {
                         const progressBar = document.querySelector('.progress-bar');
                         if (progressBar) {
@@ -174,7 +161,6 @@
                         : 0;
                     updateProgress(progressPercent);
 
-                    // Populate the table
                     const tbody = document.querySelector('#progressTable tbody');
                     workouts.forEach(workout => {
                         const row = document.createElement('tr');
@@ -185,7 +171,6 @@
                             <td>${workout.sets}</td>
                             <td>${workout.duration}</td>
                             <td>${workout.calories}</td>
-                            <td>${workout.bodyWeight}</td>
                         `;
                         tbody.appendChild(row);
                     });
