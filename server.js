@@ -179,7 +179,7 @@ app.get('/progress', async (req, res) => {  //originally '/progress'
     }
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client', 'build')));  //was originally 'public'
 
 
 //delete  not used yet
