@@ -178,6 +178,15 @@ app.get('/api/progress', async (req, res) => {  //originally '/progress'
     }
 });
 
+app.get('/api/progress-data', async (req, res) => {
+    try {
+        const result = await db.query('SELECT * FROM workouts'); // adjust if needed
+        res.json({ workouts: result.rows });
+    } catch (err) {
+        console.error('Error fetching progress data:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 //delete  not used yet
 app.delete('/workouts/:id', async (req, res) => {
     const workouts_id  = req.params.id;
