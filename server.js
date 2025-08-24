@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const cors = require('cors'); // new3
+const cors = require('cors'); // new
+app.use(cors());
 const PORT = process.env.PORT || 3000;
 const { Pool } = require('pg');
 
@@ -163,7 +164,7 @@ app.post('/submit', async (req, res) => {
 
 
 // get progress from workout page and stats page. This accesses the first chart
-app.get('/api/progress-data', async (req, res) => {  //originally '/progress'
+app.get('/api/progress', async (req, res) => {  //originally '/progress'
     try {
         const result = await pool.query('SELECT * FROM workouts');
         const result2 = await pool.query('SELECT weight FROM stats');
