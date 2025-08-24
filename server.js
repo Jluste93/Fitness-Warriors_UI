@@ -9,8 +9,8 @@ const { Pool } = require('pg');
 
 const pool = new Pool ({
     user: 'postgres',
-    host: '127.0.0.1', //changed from localhost and rds-ca-rsa2048-g1 .....database-1.c322e60egpt1.us-east-2.rds.amazonaws.com
-    database: 'fitness_warriors',
+    host: 'localhost', //changed from localhost and rds-ca-rsa2048-g1 .....database-1.c322e60egpt1.us-east-2.rds.amazonaws.com
+    database: 'postgres',
     password: 'nordaj93',
     port: 5432,
 
@@ -26,7 +26,6 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname))); // For CSS, JS, images
 app.use(cors()); // Allow cross-origin requests
 app.use(express.urlencoded({ extended: true }));
-
 
 // Routes
 app.get('/', (req, res) => {
@@ -165,18 +164,19 @@ app.post('/submit', async (req, res) => {
 
 
 // get progress from workout page and stats page. This accesses the first chart
-app.get('/progress', async (req, res) => {  //originally '/progress'
+app.get('/api/progress', async (req, res) => {  //originally '/progress'
     try {
         const result = await pool.query('SELECT * FROM workouts');
-        res.json({ workouts: result.rows });
+        const result2 = await pool.query('SELECT weight FROM stats');
+        res.json({
+            workouts: result.rows,
+            stats: result2.rows
+        });
     } catch (err){
         console.error('Error fetching progress data:', err);
         res.status(500).json({error: 'Something went wrong'})
     }
 });
-
-app.use(express.static(path.join(__dirname, 'public')));  //was originally 'client', 'build' 
-
 
 //delete  not used yet
 app.delete('/workouts/:id', async (req, res) => {
@@ -235,10 +235,6 @@ if (!schedule_date) {
         res.json({ message: `Workout for ${schedule_id} rescheduled to next available slot`, schedule_date });    
     }
     
-});
-
-app.get('/test', (req, res) => {
-  res.json({ message: 'Test route is working!' });
 });
     
 app.listen(3000, '0.0.0.0', () => {
