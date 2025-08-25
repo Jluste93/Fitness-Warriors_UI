@@ -1,126 +1,133 @@
-.Title{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: "Roboto";
+/* Typography & Layout */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
 }
 
-form{
-    border: 3px solid #ad0303;
-    margin-top: 80px;
-    border-radius: 8px;
-    width: 70%;
-    height: 450px;
-    margin: 80px auto 0 auto;
-    
+.Title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-top: 40px;
+  color: #333;
 }
 
-label{
-    display: block;
-    margin-left: 80px;
-    margin-right: 80px;
-    font-size: 15px;
-    font-family: "Roboto";
+/* Form Container */
+form {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 480px;
+  margin: 80px auto;
+  padding: 32px;
+  box-sizing: border-box;
 }
 
-input[type=text], input[type=password] {
-    width: 80%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: block;
-    margin-left: 80px;
-    margin-right: 80px;
-    font-family: "Roboto";
+/* Labels */
+label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #555;
+  display: block;
 }
 
-button{
-    background-color: #ad0303;
-    color: aliceblue;
-    padding: 14px 20px;
-    border-radius: 8px;
-    border: none;
-    display:block;
-    margin: 0 auto;
-    cursor: pointer;
-    width: 83%;
-    font-family: "Roboto";
+/* Inputs */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: #ad0303;
+  outline: none;
+}
+
+/* Buttons */
+button {
+  background-color: #ad0303;
+  color: #fff;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-    opacity: 0.8;
+  background-color: #c31414;
 }
-.cancelbtn{
-    width:auto;
-    padding: 10px 18px;
-    background-color: #ad0303;
-    font-family: "Roboto";
+
+.cancelbtn {
+  background-color: #ad0303;
+  padding: 10px 18px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
 }
+
+/* Avatar */
 .imgcontainer {
-    text-align: center;
-    margin: 24px 0 12px 0;
+  text-align: center;
+  margin: 24px 0;
 }
+
 img.avatar {
-    width: 40%;
-    border-radius: 50%;
-    
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* Utility Container */
 .container {
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    max-width: 400px;
-    margin-top: 20px;
-    padding: 32px 24px;
-    /*background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-}
-form{
-    border: 3px solid #ad0303;
-    border-radius: 8px;
-    width: 70%;
-    height: 500px;
-    margin-top: 0 auto; /* Remove margin-top: 80px and set margin to only center horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 480px;
+  padding: 32px;
 }
 
-/* forgot password*/
-
+/* Forgot Password */
 span.last {
-    float: right;
-    padding-top: 1px;
-    
+  display: block;
+  text-align: right;
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 8px;
 }
 
-@media screen and (max-width: 300px) {
-  span.last {
-    display: block;
-    float: none;
-  }
-  .cancelbtn {
-    width: 100%;
-  }
-}
-
+/* Responsive */
 @media screen and (max-width: 600px) {
-    form {
-        width: 98%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    input[type=text], input[type=password] {
-        width: 95%;
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-        padding: 10px;
-    }
-    label {
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-        text-align: left;
-    }
+  form, .container {
+    width: 90%;
+    padding: 24px;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    padding: 12px;
+  }
+
+  .Title {
+    font-size: 1.5rem;
+  }
 }
