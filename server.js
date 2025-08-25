@@ -4,6 +4,7 @@ const app = express();
 const cors = require('cors');
 const PORT = process.env.PORT || 3000;
 const { Pool } = require('pg');
+console.log('🚀 Server file loaded');
 
 // Database connection
 const pool = new Pool({
