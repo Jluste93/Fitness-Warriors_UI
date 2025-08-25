@@ -1,0 +1,25 @@
+.update {
+    padding: 10px 20px;
+    background-color: aqua;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: crosshair;
+
+}
+
+#myChart {
+  width: 100%;
+  max-width: 600px;
+  height: 400px;
+  display: block;
+}
+
+.chart-wrapper {
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+}
+canvas {
+  display: block;
+}
