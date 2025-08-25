@@ -10,12 +10,16 @@ console.log(' Server file loaded');
 
 // Database connection
 const pool = new Pool({
-    host: 'database-1.c322e60egpt1.us-east-2.rds.amazonaws.com',
-    port: 5432,
-    user: 'postgres',
-    password: 'nordaj93', 
-    database: 'fitness_warriordb',
-});  
+  user: process.env.PGUSER,
+  host: process.env.PGHOST,
+  database: process.env.PGDATABASE,
+  password: process.env.PGPASSWORD,
+  port: process.env.PGPORT,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
 
 pool.connect()
     .then(() => { console.log('Connected to PostgreSQL database!'); })
