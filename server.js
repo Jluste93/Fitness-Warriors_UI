@@ -60,7 +60,7 @@ app.get('/api/progress', async (req, res) => {
     }
 });
 
-app.get('/api/workouts', async (req, res) => {
+app.get('/workouts', async (req, res) => {
     try {
         console.log('Workouts page requested');
         const result = await pool.query('SELECT * FROM workouts ORDER BY workouts_id DESC');
@@ -72,7 +72,7 @@ app.get('/api/workouts', async (req, res) => {
 });
 
 // POST routes
-app.post('/api/users', async (req, res) => {
+app.post('/users', async (req, res) => {
     const { users_id, name, email, password } = req.body;
     try {
         await pool.query(
@@ -86,22 +86,22 @@ app.post('/api/users', async (req, res) => {
     }
 });
 
-app.post('/api/log-weight', async (req, res) => {
+app.post('/log-weight', async (req, res) => {
     const { weight, date } = req.body;
     res.json({ message: 'Weight logged successfully!' });
 });
 
-app.post('/api/log-waist', async (req, res) => {
+app.post('/log-waist', async (req, res) => {
     const { waist, date } = req.body;
     res.json({ message: 'Waist logged successfully!' });
 });
 
-app.post('/api/log-bodyfat', (req, res) => {
+app.post('/log-bodyfat', (req, res) => {
     const { bodyfat, date } = req.body;
     res.json({ message: 'Body fat logged successfully!' });
 });
 
-app.post('/api/workouts', async (req, res) => {
+app.post('/workouts', async (req, res) => {
     const workoutsToLog = req.body;
     if (!Array.isArray(workoutsToLog) || workoutsToLog.length === 0) {
         return res.status(400).send('Invalid Request');
@@ -131,7 +131,7 @@ app.post('/api/workouts', async (req, res) => {
     }
 });
 
-app.post('/api/submit', async (req, res) => {
+app.post('/submit', async (req, res) => {
     const { goals, schedule, activity_level, heightFeet, heightInches, weight, gender, dob } = req.body;
 
     const normalizeArray = (input) => {
@@ -160,11 +160,11 @@ app.post('/api/submit', async (req, res) => {
 });
 
 // DELETE routes
-app.delete('/api/workouts', (req, res) => {
+app.delete('/workouts', (req, res) => {
     res.send('Workout deleted');
 });
 
-app.delete('/api/workouts/:id', async (req, res) => {
+app.delete('/workouts/:id', async (req, res) => {
     const workouts_id = req.params.id;
     try {
         const result = await pool.query(
@@ -182,7 +182,7 @@ app.delete('/api/workouts/:id', async (req, res) => {
 });
 
 // PATCH routes
-app.patch('/api/stats/:id', async (req, res) => {
+app.patch('/stats/:id', async (req, res) => {
     const stats_id = req.params.id;
     const { goals, schedule, activity_level, weight } = req.body;
 
@@ -202,7 +202,7 @@ app.patch('/api/stats/:id', async (req, res) => {
     }
 });
 
-app.patch('/api/schedule/:id/reschedule', async (req, res) => {
+app.patch('/schedule/:id/reschedule', async (req, res) => {
     const schedule_id = req.params.id;
     const { schedule_date } = req.body;
 
