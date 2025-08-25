@@ -30,10 +30,10 @@ app.get('/', (req, res) => {
     res.send('Server is alive!');
 });
 
-app.get('/api/workouts', async (req, res) => {
-    console.log('GET /api/workouts triggered');
+//app.get('/api/workouts', async (req, res) => {
+//    console.log('GET /api/workouts triggered');
     
-});
+//});
 
 app.get('/api/stats', (req, res) => {
     try {
