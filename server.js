@@ -1,16 +1,18 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const cors = require('cors'); // new3
+const cors = require('cors');
 const PORT = process.env.PORT || 3000;
 const { Pool } = require('pg');
 
+// Database connection
 const pool = new Pool ({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'postgres',
-    password: 'nordaj93',
+    host: 'database-1.c322e60egpt1.us-east-2.rds.amazonaws.com',
     port: 5432,
+    user: 'postgres',
+    password: 'nordaj93',
+    // Corrected: Removed the semicolon from the database name
+    database: 'fitness_warriors',
 });
 
 pool.connect()
@@ -20,18 +22,57 @@ pool.connect()
 // Middleware
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
-app.use(express.static(path.join(__dirname))); // For CSS, JS, images
+// Serves static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-// Routes
+// All specific API Routes MUST be defined BEFORE the catch-all
+// ----------------------------------------------------
+
+// GET routes
 app.get('/', (req, res) => {
-  res.send('Server is alive!');
+    res.send('Server is alive!');
 });
 
-app.delete('/workouts', (req, res) => {
-    res.send('workout deleted');
+app.get('/stats', (req, res) => {
+    try {
+        console.log('Stats page requested');
+        // The path is now correctly pointing to the 'public' folder
+        res.sendFile(path.join(__dirname, 'public', 'stats.html'));
+    } catch (err){
+        res.status(400).send('The information cannot be found');
+    }
 });
 
+app.get('/progress', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM workouts');
+        const result2 = await pool.query('SELECT weight FROM stats');
+        res.json({
+            workouts: result.rows,
+            stats: result2.rows
+        });
+    } catch (err){
+        console.error('Error fetching progress data:', err);
+        res.status(500).json({error: 'Something went wrong'})
+    }
+});
+
+// NEW ROUTE to get workout data
+app.get('/workouts', async (req, res) => {
+    try {
+        console.log('Workouts page requested');
+        // Fetch all workouts from the database
+        const result = await pool.query('SELECT * FROM workouts ORDER BY workouts_id DESC');
+        // Send the fetched data as a JSON response
+        res.json({ workouts: result.rows });
+    } catch (err) {
+        console.error('Error fetching workouts:', err);
+        res.status(500).json({ error: 'Failed to fetch workouts' });
+    }
+});
+
+// POST routes
 app.post('/users', async (req, res) => {
     const { users_id, name, email, password } = req.body;
     try {
@@ -46,16 +87,6 @@ app.post('/users', async (req, res) => {
     }
 });
 
-app.get('/stats', (req, res) => {
-    const path = require('path');
-    try {
-        console.log('Stats page requested');
-        res.sendFile(path.join(__dirname,'stats.html'));
-    } catch (err){
-        res.status(400).send('The information cannot be found');
-    }
-});
-
 app.post('/log-weight', async (req, res) => {
     const {weight, date} = req.body;
     res.json({ message: 'Weight logged succesfully!'});
@@ -67,8 +98,8 @@ app.post('/log-waist', async (req, res) => {
 });
 
 app.post('/log-bodyfat', (req, res) => {
-  const { bodyfat, date } = req.body;
-  res.json({ message: 'Body fat logged successfully!' });
+    const { bodyfat, date } = req.body;
+    res.json({ message: 'Body fat logged successfully!' });
 });
 
 app.post('/workouts', async (req, res) => {
@@ -129,22 +160,13 @@ app.post('/submit', async (req, res) => {
     }
 });
 
-app.get('/progress', async (req, res) => {
-    try {
-        const result = await pool.query('SELECT * FROM workouts');
-        const result2 = await pool.query('SELECT weight FROM stats');
-        res.json({
-            workouts: result.rows,
-            stats: result2.rows
-        });
-    } catch (err){
-        console.error('Error fetching progress data:', err);
-        res.status(500).json({error: 'Something went wrong'})
-    }
+// DELETE routes
+app.delete('/workouts', (req, res) => {
+    res.send('workout deleted');
 });
 
 app.delete('/workouts/:id', async (req, res) => {
-    const workouts_id  = req.params.id;
+    const workouts_id = req.params.id;
     try {
         const result = await pool.query(
             'DELETE FROM workouts WHERE workouts_id = $1 RETURNING *',
@@ -160,24 +182,25 @@ app.delete('/workouts/:id', async (req, res) => {
     }
 });
 
+// PATCH routes
 app.patch('/stats/:id', async (req, res) => {
-  const stats_id = req.params.id;
-  const { goals, schedule, activity_level, weight } = req.body;
+    const stats_id = req.params.id;
+    const { goals, schedule, activity_level, weight } = req.body;
 
-  if (goals && schedule && activity_level && weight) {
-    try {
-      await pool.query(
-        'UPDATE stats SET goals = $1, schedule = $2, activity_level = $3, weight = $4 WHERE id = $5',
-        [goals, schedule, activity_level, weight, stats_id]
-      );
-      res.status(200).send(`Updated stats for user ${stats_id}`);
-    } catch (err) {
-      console.error('Error updating stats:', err);
-      res.status(500).send('Failed to update stats');
+    if (goals && schedule && activity_level && weight) {
+        try {
+            await pool.query(
+                'UPDATE stats SET goals = $1, schedule = $2, activity_level = $3, weight = $4 WHERE id = $5',
+                [goals, schedule, activity_level, weight, stats_id]
+            );
+            res.status(200).send(`Updated stats for user ${stats_id}`);
+        } catch (err) {
+            console.error('Error updating stats:', err);
+            res.status(500).send('Failed to update stats');
+        }
+    } else {
+        res.status(400).send('Missing required field');
     }
-  } else {
-    res.status(400).send('Missing required field');
-  }
 });
 
 app.patch('/:id/reschedule', async (req, res) => {
@@ -191,10 +214,16 @@ app.patch('/:id/reschedule', async (req, res) => {
             'UPDATE schedule SET rescheduleddate = $1 WHERE id = $2',
             [schedule_date, schedule_id]
         );
-        res.json({ message: `Workout for ${schedule_id} rescheduled to next available slot`, schedule_date });    
+        res.json({ message: `Workout for ${schedule_id} rescheduled to next available slot`, schedule_date });
     }
 });
 
-app.listen(3000, '0.0.0.0', () => {
+
+// Catch-all route must be last
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.listen(PORT, '0.0.0.0', () => {
     console.log('Server running on port 3000');
 });

@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       for (const workout of unsavedWorkouts) {
         try {
-          const response = await fetch('/workouts', {
+          const response = await fetch('http://3.147.83.249:3000/workouts', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify([{
