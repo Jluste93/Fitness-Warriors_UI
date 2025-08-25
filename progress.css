@@ -1,25 +1,146 @@
-.update {
-    padding: 10px 20px;
-    background-color: aqua;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: crosshair;
-
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
-#myChart {
+/* Keep navbar untouched */
+nav {
+  width: 100%;
+}
+
+/* Dropdown styling */
+.dropdown {
+  margin: 20px auto;
+  text-align: center;
   width: 100%;
   max-width: 600px;
-  height: 400px;
-  display: block;
 }
 
+.dropdown label {
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+select#stats {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  background-color: #fff;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Chart wrapper */
 .chart-wrapper {
   width: 100%;
   max-width: 800px;
-  margin: 20px auto;
+  margin: 30px auto;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  padding: 20px;
 }
-canvas {
+
+#myChart {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Progress bar */
+.progress-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  background-color: #e0e0e0;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 24px;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #3f51b5;
+  color: white;
+  text-align: center;
+  line-height: 24px;
+  font-weight: 500;
+  transition: width 0.4s ease;
+}
+
+/* Table styling */
+#progressTable {
+  width: 100%;
+  max-width: 800px;
+  margin: 30px auto;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#progressTable th,
+#progressTable td {
+  padding: 12px 16px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+#progressTable th {
+  background-color: #f0f0f0;
+  font-weight: 500;
+}
+
+/* Button styling */
+.Update {
+  margin: 20px auto;
   display: block;
+  padding: 10px 24px;
+  background-color: #009688;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+.Update:hover {
+  background-color: #00796b;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .chart-wrapper,
+  #progressTable,
+  .dropdown,
+  .progress-container {
+    padding: 10px;
+    margin: 20px auto;
+  }
+
+  select#stats {
+    max-width: 100%;
+  }
+
+  #progressTable th,
+  #progressTable td {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .Update {
+    width: 100%;
+    max-width: 300px;
+  }
 }

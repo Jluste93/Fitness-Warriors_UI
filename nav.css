@@ -1,39 +1,84 @@
+.nav-wrapper {
+    background-color: #ad0303;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}
 
+nav a {
+    font-family: "Roboto", sans-serif;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    font-size: 1rem;
+    padding: 8px 12px;
+    display: inline-block;
+}
+
+nav a:hover {
+    color: #ffd6d6;
+}
+
+.brand-logo {
+    font-size: 32px;
+    padding: 12px 0;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+}
+
+ul {
+    position: relative;
+    display: inline-flex;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
+}
+
+li {
+    padding: 12px 16px;
+    margin: 0;
+    list-style-type: none;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/*  Responsive tweaks */
+@media (max-width: 600px) {
     .nav-wrapper {
-        background-color: #ad0303;
-        overflow: hidden;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 8px 12px;
+    }
+
+    .brand-logo {
+        font-size: 24px;
+        padding: 8px 0;
+    }
+
+    ul {
+        width: 100%;
+        justify-content: flex-start;
+        flex-direction: column;
+    }
+
+    li {
+        width: 100%;
+        padding: 10px 12px;
     }
 
     nav a {
-        font-family: "Roboto", sans-serif;
-        color: white;
-        text-decoration: none;
+        font-size: 0.95rem;
+        width: 100%;
     }
-
-    
-    nav a:hover {
-        color: #ffd6d6;
-    }
-
-    .brand-logo{
-        font-size: 40px;
-        padding-left: 10px;
-    }
-
-    ul{
-      position: relative;
-      display:inline-flex; /*keeps it from stacking*/
-      padding: 5px;
-      margin: 20px;
-    }
-
-    li{
-        padding: 10px;
-        margin: 0px;
-        list-style-type: none;
-    }
-    
+}
