@@ -9,12 +9,12 @@
         if(id === 'weightForm') {
           const weight = document.getElementById('weight').value;
           date = document.getElementById('weight-date').value;
-          endpoint = '/log-weight';
+          endpoint = '/api/log-weight';
           payload ={ weight, date};
         } else if (id  === 'waistForm') {
           const waist = document.getElementById('waist').value;
           date = document.getElementById('waist-date').value;
-          endpoint = '/log-waist';
+          endpoint = '/api/log-waist';
           payload = { waist, date};
         }else if (id === 'bodyFatForm') {
           const bodyfat = document.getElementById('bodyfat').value;
