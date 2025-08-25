@@ -217,6 +217,16 @@ app.patch('/api/schedule/:id/reschedule', async (req, res) => {
     }
 });
 
+router.get('/', async (req, res) => {
+  try {
+    const workouts = await db.query('SELECT * FROM workouts');
+    res.json(workouts.rows);
+  } catch (err) {
+    console.error('Error fetching workouts:', err);
+    res.status(500).json({ error: 'Failed to fetch workouts' });
+  }
+});
+
 // Catch-all route
 //app.get('*', (req, res) => {
 //    res.sendFile(path.join(__dirname, 'public', 'index.html'));
