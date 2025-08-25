@@ -1,20 +1,21 @@
 require('dotenv').config();
 const express = require('express');
+const router = express.Router();
 const path = require('path');
 const app = express();
 const cors = require('cors');
 const PORT = process.env.PORT || 3000;
 const { Pool } = require('pg');
-console.log('🚀 Server file loaded');
+console.log(' Server file loaded');
 
 // Database connection
 const pool = new Pool({
     host: 'database-1.c322e60egpt1.us-east-2.rds.amazonaws.com',
     port: 5432,
     user: 'postgres',
-    password: 'nordaj93',
+    password: 'nordaj93', 
     database: 'fitness_warriors',
-});
+});  
 
 pool.connect()
     .then(() => { console.log('Connected to PostgreSQL database!'); })
